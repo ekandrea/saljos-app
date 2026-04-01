@@ -1,20 +1,26 @@
 "use client";
 
 import { useState } from 'react';
-import { getPassword } from '@/lib/store';
+import { useAuth } from '@/lib/auth-context';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
-export function LoginScreen({ onLogin }: { onLogin: (name: string) => void }) {
+export function LoginScreen() {
+  const { login } = useAuth();
   const [name, setName] = useState('');
   const [pw, setPw] = useState('');
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
-    if (!name.trim()) { setError(true); return; }
-    if (pw !== getPassword()) { setError(true); setPw(''); return; }
-    onLogin(name.trim());
+  const handleLogin = async () => {
+    if (!name.trim()) { setError('Ange ditt namn'); return; }
+    if (!pw) { setError('Ange lösenord'); return; }
+    setLoading(true);
+    setError('');
+    const err = await login(name.trim(), pw);
+    setLoading(false);
+    if (err) { setError(err); setPw(''); }
   };
 
   return (
@@ -43,11 +49,12 @@ export function LoginScreen({ onLogin }: { onLogin: (name: string) => void }) {
           />
           <Button
             onClick={handleLogin}
+            disabled={loading}
             className="w-full h-12 text-sm font-bold bg-gradient-to-r from-[#5b5fc7] to-[#7c7ff2] hover:opacity-90"
           >
-            Logga in
+            {loading ? 'Loggar in...' : 'Logga in'}
           </Button>
-          {error && <p className="text-red-500 text-xs mt-3">Fel lösenord eller namn saknas</p>}
+          {error && <p className="text-red-500 text-xs mt-3">{error}</p>}
         </CardContent>
       </Card>
     </div>

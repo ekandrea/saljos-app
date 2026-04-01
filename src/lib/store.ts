@@ -2,75 +2,97 @@
 
 import { Lead } from './types';
 
-const LOCK_MIN = 120;
+// ============================================
+// API-based store (replaces localStorage sync)
+// ============================================
 
-export function getSellerName(): string {
-  if (typeof window === 'undefined') return 'andy';
-  return sessionStorage.getItem('saljos_seller') || 'andy';
-}
-
-export function setSellerName(name: string) {
-  const n = name.toLowerCase().trim();
-  sessionStorage.setItem('saljos_seller', n);
-  sessionStorage.setItem('saljos_auth', '1');
-}
-
-export function isLoggedIn(): boolean {
-  if (typeof window === 'undefined') return false;
-  return sessionStorage.getItem('saljos_auth') === '1';
-}
-
-export function logout() {
-  sessionStorage.clear();
-}
-
-function localKey(): string {
-  return 'saljos_leads_' + getSellerName();
-}
-
-export function loadLeads(): Lead[] {
-  if (typeof window === 'undefined') return [];
+export async function fetchLeads(): Promise<Lead[]> {
   try {
-    // Try new key first, fallback to old key
-    let raw = localStorage.getItem(localKey());
-    if (!raw) {
-      raw = localStorage.getItem('saljos_leads_v2');
-      if (raw) localStorage.setItem(localKey(), raw);
-    }
-    if (raw) return JSON.parse(raw);
-  } catch {}
-  return [];
-}
-
-export function saveLeads(leads: Lead[]) {
-  try {
-    localStorage.setItem(localKey(), JSON.stringify(leads));
-  } catch {}
-}
-
-export async function cloudPull(): Promise<Lead[]> {
-  try {
-    const res = await fetch('/api/sync?seller=' + encodeURIComponent(getSellerName()));
-    if (!res.ok) throw new Error(String(res.status));
+    const res = await fetch('/api/leads');
+    if (!res.ok) return [];
     const data = await res.json();
-    if (data.record?.leads?.length > 0) {
-      return data.record.leads;
-    }
-  } catch {}
-  return [];
+    return data.leads || [];
+  } catch {
+    return [];
+  }
 }
 
-export async function cloudPush(leads: Lead[]) {
+export async function updateLead(id: number, updates: Partial<Lead>): Promise<Lead | null> {
   try {
-    await fetch('/api/sync', {
-      method: 'PUT',
+    const res = await fetch(`/api/leads/${id}`, {
+      method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ leads, seller: getSellerName(), updatedAt: new Date().toISOString() }),
+      body: JSON.stringify(updates),
     });
-  } catch {}
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.lead;
+  } catch {
+    return null;
+  }
 }
 
-export function lockLead(leads: Lead[], id: number, seller: string): Lead[] {
+export async function createLead(lead: Partial<Lead>): Promise<Lead | null> {
+  try {
+    const res = await fetch('/api/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(lead),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.lead;
+  } catch {
+    return null;
+  }
+}
+
+export async function bulkImportLeads(leads: Lead[]): Promise<{ leads: Lead[]; count: number }> {
+  try {
+    const res = await fetch('/api/leads/bulk', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ leads }),
+    });
+    if (!res.ok) return { leads: [], count: 0 };
+    return res.json();
+  } catch {
+    return { leads: [], count: 0 };
+  }
+}
+
+export async function fetchPins(): Promise<number[]> {
+  try {
+    const res = await fetch('/api/pins');
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.pinnedIds || [];
+  } catch {
+    return [];
+  }
+}
+
+export async function addPin(leadId: number): Promise<void> {
+  await fetch('/api/pins', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ leadId }),
+  });
+}
+
+export async function removePin(leadId: number): Promise<void> {
+  await fetch('/api/pins', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ leadId }),
+  });
+}
+
+// ============================================
+// Lead locking (still client-side logic, saves via API)
+// ============================================
+
+export function lockLeadLocal(leads: Lead[], id: number, seller: string): Lead[] {
   return leads.map(l => {
     if (l.id !== id) return l;
     if (l.lockedBy && l.lockedBy !== seller && !lockExpired(l)) return l;
@@ -78,7 +100,7 @@ export function lockLead(leads: Lead[], id: number, seller: string): Lead[] {
   });
 }
 
-export function unlockLead(leads: Lead[], id: number, seller: string): Lead[] {
+export function unlockLeadLocal(leads: Lead[], id: number, seller: string): Lead[] {
   return leads.map(l => {
     if (l.id !== id || l.lockedBy !== seller) return l;
     return { ...l, lockedBy: null, lockedAt: null };
@@ -87,14 +109,43 @@ export function unlockLead(leads: Lead[], id: number, seller: string): Lead[] {
 
 function lockExpired(l: Lead): boolean {
   if (!l.lockedAt) return true;
-  return (Date.now() - new Date(l.lockedAt).getTime()) / 60000 > LOCK_MIN;
+  return (Date.now() - new Date(l.lockedAt).getTime()) / 60000 > 120;
 }
 
-export function nextId(leads: Lead[]): number {
-  return leads.length ? Math.max(...leads.map(l => l.id)) + 1 : 1;
+// ============================================
+// Admin: sellers management
+// ============================================
+
+export async function fetchSellers() {
+  const res = await fetch('/api/admin/sellers');
+  if (!res.ok) return [];
+  const data = await res.json();
+  return data.sellers || [];
 }
 
-export function getPassword(): string {
-  if (typeof window === 'undefined') return 'saljos2026';
-  return localStorage.getItem('saljos_pw') || 'saljos2026';
+export async function createSeller(name: string, displayName: string, password: string, isAdmin: boolean) {
+  const res = await fetch('/api/admin/sellers', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, displayName, password, isAdmin }),
+  });
+  return res.json();
+}
+
+export async function deleteSeller(id: string) {
+  const res = await fetch('/api/admin/sellers', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id }),
+  });
+  return res.json();
+}
+
+export async function changePassword(oldPassword: string, newPassword: string) {
+  const res = await fetch('/api/auth/change-password', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ oldPassword, newPassword }),
+  });
+  return res.json();
 }
