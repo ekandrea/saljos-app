@@ -31,13 +31,16 @@ export default function Home() {
   const [pinnedIds, setPinnedIds] = useState<number[]>([]);
   const [prospektDetailId, setProspektDetailId] = useState<number | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [dataLoading, setDataLoading] = useState(true);
 
   // Load leads from API when logged in
   const loadData = useCallback(async () => {
     if (!authSeller) return;
+    setDataLoading(true);
     const [leadsData, pinsData] = await Promise.all([fetchLeads(), fetchPins()]);
     setLeads(leadsData);
     setPinnedIds(pinsData);
+    setDataLoading(false);
   }, [authSeller]);
 
   useEffect(() => { loadData(); }, [loadData]);
@@ -187,10 +190,10 @@ export default function Home() {
     prospekt: leads.filter(l => l.status === 'prospekt').length,
   };
 
-  if (authLoading) {
+  if (authLoading && !authSeller) {
     return (
       <div className="fixed inset-0 bg-[#0c0c14] flex items-center justify-center">
-        <div className="text-white text-lg font-bold">&#9889; Laddar...</div>
+        <div className="text-white text-lg font-bold animate-pulse">&#9889; Säljös</div>
       </div>
     );
   }
