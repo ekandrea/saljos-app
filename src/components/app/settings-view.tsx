@@ -11,6 +11,44 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Trash2, UserPlus, Key, Shield } from 'lucide-react';
 
+function MigrateCard({ onReloadLeads }: { onReloadLeads?: () => void }) {
+  const [migrateMsg, setMigrateMsg] = useState('');
+  const [migrating, setMigrating] = useState(false);
+
+  const handleMigrate = async () => {
+    setMigrating(true);
+    setMigrateMsg('Migrerar...');
+    try {
+      const res = await fetch('/api/migrate', { method: 'POST' });
+      const data = await res.json();
+      if (data.ok) {
+        setMigrateMsg(`Klart! ${data.migrated} leads migrerade.`);
+        if (onReloadLeads) onReloadLeads();
+      } else {
+        setMigrateMsg(data.error || 'Något gick fel');
+      }
+    } catch {
+      setMigrateMsg('Nätverksfel');
+    }
+    setMigrating(false);
+  };
+
+  return (
+    <Card className="border-blue-200">
+      <CardContent className="p-6">
+        <h3 className="font-bold mb-2">Migrera data från v1</h3>
+        <p className="text-sm text-muted-foreground mb-4">
+          Flytta alla leads från gamla Säljös till nya databasen. Tryck bara en gång.
+        </p>
+        <Button variant="outline" onClick={handleMigrate} disabled={migrating}>
+          {migrating ? 'Migrerar...' : 'Migrera nu'}
+        </Button>
+        {migrateMsg && <p className={`text-xs mt-2 ${migrateMsg.includes('Klart') ? 'text-green-600' : 'text-red-500'}`}>{migrateMsg}</p>}
+      </CardContent>
+    </Card>
+  );
+}
+
 interface SettingsViewProps {
   leads: Lead[];
   onReloadLeads?: () => void;
@@ -142,6 +180,11 @@ export function SettingsView({ leads, onReloadLeads }: SettingsViewProps) {
             </div>
           </CardContent>
         </Card>
+      )}
+
+      {/* Migrate from v1 */}
+      {seller?.isAdmin && (
+        <MigrateCard onReloadLeads={onReloadLeads} />
       )}
 
       {/* Test data */}
