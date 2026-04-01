@@ -49,7 +49,7 @@ export interface Lead {
   score?: number;
 }
 
-export type ViewName = 'dialer' | 'pipeline' | 'leads' | 'dash' | 'sok' | 'settings';
+export type ViewName = 'dialer' | 'pipeline' | 'leads' | 'prospekt' | 'dash' | 'sok' | 'settings';
 
 export const STATUS_LABELS: Record<string, string> = {
   ny: 'Ny',

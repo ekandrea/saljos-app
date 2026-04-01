@@ -1,0 +1,216 @@
+import { Lead } from './types';
+
+export function getSeedData(): Lead[] {
+  return [
+    // === PROSPEKT (Bolagsverket-data, inte jobbade med ännu) ===
+    {
+      id: 1001, company: 'Erikssons Åkeri AB', contact: 'Lars Eriksson', phone: '0701234567', orgnr: '5591234567',
+      operator: 'Telia', email: 'lars@erikssons-akeri.se', plan: 'Telia Företag Pro', priceOrig: '499', priceDiscount: '', priceFinal: '499',
+      bindingDate: '2026-06-15', industry: 'åkeri', portingDate: null, nextCallDate: null, status: 'prospekt', note: '',
+      vdName: 'Lars Eriksson', vdPhone: '0701234567', vdEmail: 'lars@erikssons-akeri.se', website: 'erikssons-akeri.se',
+      offerSent: false, offerOpened: false, history: [], lockedBy: null, lockedAt: null, seller: null,
+      subs: [
+        { phone: '0701234567', user: 'Lars Eriksson', portDate: '', end: '2026-06-15', plan: 'Telia Företag Pro' },
+        { phone: '0701234568', user: 'Anna Eriksson', portDate: '', end: '2026-06-15', plan: 'Telia Företag Bas' },
+        { phone: '0701234569', user: 'Kalle Svensson', portDate: '', end: '2026-08-01', plan: 'Telia Företag Bas' },
+      ],
+      tb_amount: 0, nyteck_count: 0, forlang_count: 0, deal_type: null,
+    },
+    {
+      id: 1002, company: 'Måleri Norden AB', contact: 'Eva Lindström', phone: '0731112233', orgnr: '5592345678',
+      operator: 'Tele2', email: 'eva@malerinorden.se', plan: 'Tele2 Företag M', priceOrig: '349', priceDiscount: '', priceFinal: '349',
+      bindingDate: '2026-05-01', industry: 'måleri', portingDate: null, nextCallDate: null, status: 'prospekt', note: '',
+      vdName: 'Eva Lindström', vdPhone: '0731112233', vdEmail: 'eva@malerinorden.se', website: 'malerinorden.se',
+      offerSent: false, offerOpened: false, history: [], lockedBy: null, lockedAt: null, seller: null,
+      subs: [
+        { phone: '0731112233', user: 'Eva Lindström', portDate: '', end: '2026-05-01', plan: 'Tele2 Företag M' },
+        { phone: '0731112234', user: 'Per Johansson', portDate: '', end: '2026-05-01', plan: 'Tele2 Företag S' },
+      ],
+      tb_amount: 0, nyteck_count: 0, forlang_count: 0, deal_type: null,
+    },
+    {
+      id: 1003, company: 'Bygg & Montage i Väst AB', contact: 'Mikael Ström', phone: '0709876543', orgnr: '5593456789',
+      operator: 'Telenor', email: 'mikael@byggvast.se', plan: 'Telenor Företag L', priceOrig: '449', priceDiscount: '', priceFinal: '449',
+      bindingDate: '2026-04-20', industry: 'bygg', portingDate: null, nextCallDate: null, status: 'prospekt', note: '',
+      vdName: 'Mikael Ström', vdPhone: '0709876543', vdEmail: 'mikael@byggvast.se', website: 'byggvast.se',
+      offerSent: false, offerOpened: false, history: [], lockedBy: null, lockedAt: null, seller: null,
+      subs: [
+        { phone: '0709876543', user: 'Mikael Ström', portDate: '', end: '2026-04-20', plan: 'Telenor Företag L' },
+        { phone: '0709876544', user: 'Johan Berg', portDate: '', end: '2026-04-20', plan: 'Telenor Företag M' },
+        { phone: '0709876545', user: 'Lisa Holm', portDate: '', end: '2026-09-01', plan: 'Telenor Företag S' },
+        { phone: '0709876546', user: 'Erik Dahl', portDate: '', end: '2026-04-20', plan: 'Telenor Företag M' },
+      ],
+      tb_amount: 0, nyteck_count: 0, forlang_count: 0, deal_type: null,
+    },
+    {
+      id: 1004, company: 'Snabb Logistik AB', contact: 'Sara Nilsson', phone: '0761234567', orgnr: '5594567890',
+      operator: 'Tre', email: 'sara@snabblogistik.se', plan: 'Tre Företag Plus', priceOrig: '399', priceDiscount: '', priceFinal: '399',
+      bindingDate: '2026-07-10', industry: 'logistik', portingDate: null, nextCallDate: null, status: 'prospekt', note: '',
+      vdName: 'Sara Nilsson', vdPhone: '0761234567', vdEmail: 'sara@snabblogistik.se', website: 'snabblogistik.se',
+      offerSent: false, offerOpened: false, history: [], lockedBy: null, lockedAt: null, seller: null,
+      subs: [
+        { phone: '0761234567', user: 'Sara Nilsson', portDate: '', end: '2026-07-10', plan: 'Tre Företag Plus' },
+      ],
+      tb_amount: 0, nyteck_count: 0, forlang_count: 0, deal_type: null,
+    },
+    {
+      id: 1005, company: 'Pedal & Cykel AB', contact: 'Oskar Lund', phone: '0721112233', orgnr: '5595678901',
+      operator: 'Telia', email: 'oskar@pedalcykel.se', plan: 'Telia Företag Bas', priceOrig: '299', priceDiscount: '', priceFinal: '299',
+      bindingDate: '2026-03-15', industry: 'cykel', portingDate: null, nextCallDate: null, status: 'prospekt', note: '',
+      vdName: 'Oskar Lund', vdPhone: '0721112233', vdEmail: 'oskar@pedalcykel.se', website: 'pedalcykel.se',
+      offerSent: false, offerOpened: false, history: [], lockedBy: null, lockedAt: null, seller: null,
+      subs: [
+        { phone: '0721112233', user: 'Oskar Lund', portDate: '', end: '2026-03-15', plan: 'Telia Företag Bas' },
+        { phone: '0721112234', user: 'Frida Berg', portDate: '', end: '2026-03-15', plan: 'Telia Företag Bas' },
+      ],
+      tb_amount: 0, nyteck_count: 0, forlang_count: 0, deal_type: null,
+    },
+    {
+      id: 1006, company: 'VVS Experten i Sthlm AB', contact: 'Patrik Söderberg', phone: '0701239999', orgnr: '5596789012',
+      operator: 'Tele2', email: 'patrik@vvsexperten.se', plan: 'Tele2 Företag L', priceOrig: '449', priceDiscount: '', priceFinal: '449',
+      bindingDate: '2026-08-20', industry: 'vvs', portingDate: null, nextCallDate: null, status: 'prospekt', note: '',
+      vdName: 'Patrik Söderberg', vdPhone: '0701239999', vdEmail: 'patrik@vvsexperten.se', website: 'vvsexperten.se',
+      offerSent: false, offerOpened: false, history: [], lockedBy: null, lockedAt: null, seller: null,
+      subs: [
+        { phone: '0701239999', user: 'Patrik Söderberg', portDate: '', end: '2026-08-20', plan: 'Tele2 Företag L' },
+        { phone: '0701239998', user: 'Marcus Ek', portDate: '', end: '2026-08-20', plan: 'Tele2 Företag M' },
+        { phone: '0701239997', user: 'Daniel Blom', portDate: '', end: '2026-08-20', plan: 'Tele2 Företag S' },
+      ],
+      tb_amount: 0, nyteck_count: 0, forlang_count: 0, deal_type: null,
+    },
+    {
+      id: 1007, company: 'El-Teknik Syd AB', contact: 'Helena Kraft', phone: '0769998877', orgnr: '5597890123',
+      operator: 'Telenor', email: 'helena@eltekniksyd.se', plan: 'Telenor Företag M', priceOrig: '399', priceDiscount: '', priceFinal: '399',
+      bindingDate: '2026-05-30', industry: 'el', portingDate: null, nextCallDate: null, status: 'prospekt', note: '',
+      vdName: 'Helena Kraft', vdPhone: '0769998877', vdEmail: 'helena@eltekniksyd.se', website: 'eltekniksyd.se',
+      offerSent: false, offerOpened: false, history: [], lockedBy: null, lockedAt: null, seller: null,
+      subs: [
+        { phone: '0769998877', user: 'Helena Kraft', portDate: '', end: '2026-05-30', plan: 'Telenor Företag M' },
+      ],
+      tb_amount: 0, nyteck_count: 0, forlang_count: 0, deal_type: null,
+    },
+    {
+      id: 1008, company: 'Anderssons Transport & Spedition AB', contact: 'Tommy Andersson', phone: '0704445566', orgnr: '5598901234',
+      operator: 'Telia', email: 'tommy@anderssonstransport.se', plan: 'Telia Företag Pro', priceOrig: '549', priceDiscount: '', priceFinal: '549',
+      bindingDate: '2026-04-05', industry: 'åkeri', portingDate: null, nextCallDate: null, status: 'prospekt', note: '',
+      vdName: 'Tommy Andersson', vdPhone: '0704445566', vdEmail: 'tommy@anderssonstransport.se', website: 'anderssonstransport.se',
+      offerSent: false, offerOpened: false, history: [], lockedBy: null, lockedAt: null, seller: null,
+      subs: [
+        { phone: '0704445566', user: 'Tommy Andersson', portDate: '', end: '2026-04-05', plan: 'Telia Företag Pro' },
+        { phone: '0704445567', user: 'Roger Vik', portDate: '', end: '2026-04-05', plan: 'Telia Företag Bas' },
+        { phone: '0704445568', user: 'Sandra Lind', portDate: '', end: '2026-06-01', plan: 'Telia Företag Bas' },
+        { phone: '0704445569', user: 'Peter Ågren', portDate: '', end: '2026-04-05', plan: 'Telia Företag Pro' },
+        { phone: '0704445570', user: 'Malin Ek', portDate: '', end: '2026-04-05', plan: 'Telia Företag Bas' },
+      ],
+      tb_amount: 0, nyteck_count: 0, forlang_count: 0, deal_type: null,
+    },
+
+    // === AKTIVA LEADS (jobbar med / har historik) ===
+    {
+      id: 2001, company: 'Karlssons Bygg AB', contact: 'Björn Karlsson', phone: '0708887766', orgnr: '5561234567',
+      operator: 'Tele2', email: 'bjorn@karlssonsbygg.se', plan: 'Tele2 Företag M', priceOrig: '399', priceDiscount: '349', priceFinal: '349',
+      bindingDate: '2026-04-10', industry: 'bygg', portingDate: null, nextCallDate: '2026-04-01', status: 'ring_senare', note: '',
+      vdName: 'Björn Karlsson', vdPhone: '0708887766', vdEmail: 'bjorn@karlssonsbygg.se', website: 'karlssonsbygg.se',
+      offerSent: false, offerOpened: false,
+      history: [
+        { date: '2026-03-28', outcome: 'Ej svar – åter om 2h', note: '', seller: 'andrea' },
+        { date: '2026-03-29', outcome: 'Ring senare: 2026-04-01', note: 'Var i möte, ring efter lunch', seller: 'andrea' },
+      ],
+      lockedBy: null, lockedAt: null, seller: 'andrea',
+      subs: [
+        { phone: '0708887766', user: 'Björn Karlsson', portDate: '', end: '2026-04-10', plan: 'Tele2 Företag M' },
+        { phone: '0708887767', user: 'Sven Olsson', portDate: '', end: '2026-04-10', plan: 'Tele2 Företag S' },
+        { phone: '0708887768', user: 'Ida Nordin', portDate: '', end: '2026-07-15', plan: 'Tele2 Företag S' },
+      ],
+      tb_amount: 0, nyteck_count: 0, forlang_count: 0, deal_type: null,
+    },
+    {
+      id: 2002, company: 'Snabba Bud & Logistik AB', contact: 'Maria Grahn', phone: '0739998877', orgnr: '5562345678',
+      operator: 'Tre', email: 'maria@snabbabud.se', plan: 'Tre Företag M', priceOrig: '349', priceDiscount: '299', priceFinal: '299',
+      bindingDate: '2026-05-20', industry: 'logistik', portingDate: null, nextCallDate: null, status: 'offert', note: '',
+      vdName: 'Maria Grahn', vdPhone: '0739998877', vdEmail: 'maria@snabbabud.se', website: 'snabbabud.se',
+      offerSent: true, offerOpened: true,
+      history: [
+        { date: '2026-03-25', outcome: 'Bra samtal, intresserad', note: 'Vill ha offert på 5 abb', seller: 'andrea' },
+        { date: '2026-03-27', outcome: 'Offert skickad', note: '5 abb Telia Pro, TB 2400kr', seller: 'andrea' },
+      ],
+      lockedBy: null, lockedAt: null, seller: 'andrea',
+      subs: [
+        { phone: '0739998877', user: 'Maria Grahn', portDate: '', end: '2026-05-20', plan: 'Tre Företag M' },
+        { phone: '0739998878', user: 'Ali Hassan', portDate: '', end: '2026-05-20', plan: 'Tre Företag S' },
+        { phone: '0739998879', user: 'Jonas Falk', portDate: '', end: '2026-05-20', plan: 'Tre Företag S' },
+        { phone: '0739998880', user: 'Emma Vik', portDate: '', end: '2026-05-20', plan: 'Tre Företag M' },
+        { phone: '0739998881', user: 'David Ström', portDate: '', end: '2026-08-01', plan: 'Tre Företag S' },
+      ],
+      tb_amount: 2400, nyteck_count: 0, forlang_count: 0, deal_type: null,
+    },
+    {
+      id: 2003, company: 'Göteborgs Måleri & Fasad AB', contact: 'Henrik Lund', phone: '0721234567', orgnr: '5563456789',
+      operator: 'Telia', email: 'henrik@gbgmaleri.se', plan: 'Telia Företag Bas', priceOrig: '299', priceDiscount: '', priceFinal: '299',
+      bindingDate: '2026-03-20', industry: 'måleri', portingDate: null, nextCallDate: null, status: 'order', note: '',
+      vdName: 'Henrik Lund', vdPhone: '0721234567', vdEmail: 'henrik@gbgmaleri.se', website: 'gbgmaleri.se',
+      offerSent: true, offerOpened: true,
+      history: [
+        { date: '2026-03-20', outcome: 'Bra samtal', note: 'Bindning utgången, vill byta', seller: 'andrea' },
+        { date: '2026-03-22', outcome: 'Offert skickad', note: '3 abb nyteck', seller: 'andrea' },
+        { date: '2026-03-26', outcome: '✅ Order!', note: '3 nyteck Telia Pro, TB 1800kr', seller: 'andrea' },
+      ],
+      lockedBy: null, lockedAt: null, seller: 'andrea',
+      subs: [
+        { phone: '0721234567', user: 'Henrik Lund', portDate: '', end: '2026-03-20', plan: 'Telia Företag Bas' },
+        { phone: '0721234568', user: 'Ola Strand', portDate: '', end: '2026-03-20', plan: 'Telia Företag Bas' },
+        { phone: '0721234569', user: 'Lena Björk', portDate: '', end: '2026-03-20', plan: 'Telia Företag Bas' },
+      ],
+      tb_amount: 1800, nyteck_count: 3, forlang_count: 0, deal_type: 'nyteck',
+    },
+    {
+      id: 2004, company: 'Express Åkeri Norr AB', contact: 'Karl-Johan Berg', phone: '0701119999', orgnr: '5564567890',
+      operator: 'Telenor', email: 'kj@expressakeri.se', plan: 'Telenor Företag L', priceOrig: '499', priceDiscount: '449', priceFinal: '449',
+      bindingDate: '2026-04-15', industry: 'åkeri', portingDate: null, nextCallDate: null, status: 'ny', note: '',
+      vdName: 'Karl-Johan Berg', vdPhone: '0701119999', vdEmail: 'kj@expressakeri.se', website: 'expressakeri.se',
+      offerSent: false, offerOpened: false, history: [], lockedBy: null, lockedAt: null, seller: null,
+      subs: [
+        { phone: '0701119999', user: 'Karl-Johan Berg', portDate: '', end: '2026-04-15', plan: 'Telenor Företag L' },
+        { phone: '0701119998', user: 'Niklas Ek', portDate: '', end: '2026-04-15', plan: 'Telenor Företag M' },
+      ],
+      tb_amount: 0, nyteck_count: 0, forlang_count: 0, deal_type: null,
+    },
+    {
+      id: 2005, company: 'Framtidens El AB', contact: 'Jenny Wikström', phone: '0761119999', orgnr: '5565678901',
+      operator: 'Tele2', email: 'jenny@framtidsel.se', plan: 'Tele2 Företag S', priceOrig: '249', priceDiscount: '', priceFinal: '249',
+      bindingDate: '2026-06-01', industry: 'el', portingDate: null, nextCallDate: '2026-03-31', status: 'ej_svar', note: '',
+      vdName: 'Jenny Wikström', vdPhone: '0761119999', vdEmail: 'jenny@framtidsel.se', website: 'framtidsel.se',
+      offerSent: false, offerOpened: false,
+      history: [
+        { date: '2026-03-31', outcome: 'Ej svar – åter om 2h', note: '', seller: 'andrea' },
+      ],
+      lockedBy: null, lockedAt: null, seller: 'andrea',
+      subs: [
+        { phone: '0761119999', user: 'Jenny Wikström', portDate: '', end: '2026-06-01', plan: 'Tele2 Företag S' },
+      ],
+      tb_amount: 0, nyteck_count: 0, forlang_count: 0, deal_type: null,
+    },
+    {
+      id: 2006, company: 'Ströms Schakt & Mark AB', contact: 'Bengt Ström', phone: '0704443322', orgnr: '5566789012',
+      operator: 'Telia', email: 'bengt@stromsschakt.se', plan: 'Telia Företag Pro', priceOrig: '549', priceDiscount: '499', priceFinal: '499',
+      bindingDate: '2026-03-01', industry: 'bygg', portingDate: null, nextCallDate: null, status: 'order', note: '',
+      vdName: 'Bengt Ström', vdPhone: '0704443322', vdEmail: 'bengt@stromsschakt.se', website: 'stromsschakt.se',
+      offerSent: true, offerOpened: true,
+      history: [
+        { date: '2026-03-15', outcome: 'Bra samtal, bindning utgått', note: '6 abb, alla vill byta', seller: 'andrea' },
+        { date: '2026-03-18', outcome: 'Offert skickad', note: '6 abb förlängning', seller: 'andrea' },
+        { date: '2026-03-20', outcome: '✅ Order!', note: '6 förläng, TB 3200kr', seller: 'andrea' },
+      ],
+      lockedBy: null, lockedAt: null, seller: 'andrea',
+      subs: [
+        { phone: '0704443322', user: 'Bengt Ström', portDate: '', end: '2026-03-01', plan: 'Telia Företag Pro' },
+        { phone: '0704443323', user: 'Anton Lind', portDate: '', end: '2026-03-01', plan: 'Telia Företag Bas' },
+        { phone: '0704443324', user: 'Klara Dahl', portDate: '', end: '2026-03-01', plan: 'Telia Företag Bas' },
+        { phone: '0704443325', user: 'Robin Fors', portDate: '', end: '2026-03-01', plan: 'Telia Företag Pro' },
+        { phone: '0704443326', user: 'Sofia Eng', portDate: '', end: '2026-03-01', plan: 'Telia Företag Bas' },
+        { phone: '0704443327', user: 'Tim Berg', portDate: '', end: '2026-03-01', plan: 'Telia Företag Bas' },
+      ],
+      tb_amount: 3200, nyteck_count: 0, forlang_count: 6, deal_type: 'forlang',
+    },
+  ];
+}
